@@ -6,6 +6,7 @@ import * as stylex from "@stylexjs/stylex"
 import FabitsLogo from "./assets/fabits_logo.svg"
 import ResizeIcon from "./assets/resize_icon.svg"
 import NotificationBellIcon from "./assets/notification_bell_icon.svg"
+import NoteStackAdd from "./assets/note_stack_add.svg"
 
 import HomeIcon from "./assets/navbar/home_icon.svg"
 import TrackChangesIcon from "./assets/navbar/track_changes_icon.svg"
@@ -18,20 +19,20 @@ import TuneIcon from "./assets/navbar/tune_icon.svg"
 const bell = stylex.keyframes({
   "0%": {
     transform: "rotate(0deg)",
-    transition: "all 250ms",
+    transition: "all 100ms",
   },
 
   "35%": {
     transform: "rotate(45deg)",
-    transition: "all 250ms",
+    transition: "all 100ms",
   },
   "70%": {
     transform: "rotate(-45deg)",
-    transition: "all 250ms",
+    transition: "all 100ms",
   },
   "100%:": {
     transform: "rotate(0deg)",
-    transition: "all 250ms",
+    transition: "all 100ms",
   },
 })
 
@@ -40,16 +41,18 @@ const styles = stylex.create({
     width: "100%",
     position: "relative",
     background: "#F4F7FE",
+    display: "flex",
+    gap: "2rem",
   },
   aside: {
     width: "20rem",
     height: "100vh",
-    border: "1px solid #D3DBEC",
+    borderRight: "2px solid #D3DBEC",
     boxSizing: "border-box",
     background: "#F4F7FE",
     display: "flex",
     padding: "1rem",
-    position: "fixed",
+    position: "sticky",
   },
   mainNavbar: {
     display: "flex",
@@ -79,7 +82,7 @@ const styles = stylex.create({
   notificationBell: {
     ":hover": {
       animationName: bell,
-      animationDuration: "2s",
+      animationDuration: "300ms",
       animationDirection: "linear",
     },
   },
@@ -114,6 +117,53 @@ const styles = stylex.create({
   flex: {
     display: "flex",
     gap: "1rem",
+  },
+  main: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    boxSizing: "border-box",
+    padding: "3rem 2rem 0rem 0rem",
+  },
+  bodyHeader: {
+    width: "100%",
+    height: "14rem",
+    border: "2px solid #D3DBEC",
+    borderRadius: "2rem",
+    boxSizing: "border-box",
+    background: "#ffffff",
+    filter: "drop-shadow(0rem 0.7rem 0.5rem #D3DBEC)",
+  },
+  paragraph: (isSubHeader) => ({
+    padding: "0rem",
+    margin: "0rem",
+    color: isSubHeader && "#575757",
+  }),
+  carouselContainer: {
+    display: "flex",
+    boxSizing: "border-box",
+    padding: "1.5rem 1.5rem 0rem 1.5rem",
+    height: "100%",
+  },
+  carouselQueryContainer: {
+    display: "flex",
+    flexDirection: "column",
+    position: "relative",
+    gap: "0.5rem",
+  },
+
+  noteStackIcon: {
+    position: "absolute",
+    bottom: "0",
+    left: "2rem",
+  },
+
+  carouselQueryHeader: {
+    margin: "0",
+    fontWeight: "700",
+    fontSize: "1.5rem",
+    color: "#2D2D2D",
   },
 })
 
@@ -254,8 +304,24 @@ const App = () => {
           />
         </button>
       </aside>
-      <main>
-        <nav></nav>
+      <main {...stylex.props(styles.main)}>
+        <header {...stylex.props(styles.bodyHeader)}>
+          <nav {...stylex.props(styles.carouselContainer)}>
+            <div {...stylex.props(styles.carouselQueryContainer)}>
+              <span {...stylex.props(styles.carouselQueryHeader)}>
+                What financial goal do{" "}
+                <p {...stylex.props(styles.paragraph)}>
+                  you want to plan today?
+                </p>
+              </span>
+              <p {...stylex.props(styles.paragraph(true))}>
+                Select a goal to start planning.
+              </p>
+              <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
+            </div>
+          </nav>
+        </header>
+        <section></section>
       </main>
     </section>
   )
