@@ -43,13 +43,42 @@ const styles = stylex.create({
     flexDirection: "column",
     gap: "1rem",
   },
+
+  goalInfoWrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
   goalInfoRow: {
     display: "flex",
     justifyContent: "space-between",
+    flexDirection: "column",
+    gap: "1rem",
   },
   p: {
     padding: 0,
     margin: 0,
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  },
+  excellent: {
+    color: "#5B8350",
+    fill: "#5B8350",
+    fontWeight: "600",
+  },
+  good: {
+    color: "#74A766",
+    fill: "#74A766",
+    fontWeight: "600",
+  },
+  weak: {
+    color: "#D99E16",
+    fontWeight: "600",
+  },
+  poor: {
+    color: "#E85D5D",
+    fontWeight: "600",
   },
 })
 
@@ -94,26 +123,45 @@ const CardBody = ({ children }) => {
 
   return (
     <div {...stylex.props(styles.goalInfo)}>
-      <div {...stylex.props(styles.goalInfoRow)}>
-        <div>
-          {cardBody.rowTitle1}
-          <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue1}</p>
+      <div {...stylex.props(styles.goalInfoWrapper)}>
+        <div {...stylex.props(styles.goalInfoRow)}>
+          <div>
+            {cardBody.rowTitle1}
+            <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue1}</p>
+          </div>
+
+          <div>
+            {cardBody.rowTitle3}{" "}
+            <p {...stylex.props(styles.p)}>{cardBody.rowValue3}</p>
+          </div>
         </div>
-        <div>
-          {cardBody.rowTitle2}
-          <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue2}</p>
+        <div {...stylex.props(styles.goalInfoRow)}>
+          <div>
+            {cardBody.rowTitle2}
+            <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue2}</p>
+          </div>
+
+          <div>
+            {cardBody.rowTitle4}
+            <p
+              {...stylex.props(
+                styles.p,
+                styles[`${cardBody.rowValue4?.toLowerCase()}`]
+              )}
+            >
+              <img
+                src={cardBody.goalHealthIconSource}
+                {...stylex.props(
+                  styles[`${cardBody.rowValue4?.toLowerCase()}`]
+                )}
+                fill="red"
+              />
+              <>{cardBody.rowValue4}</>
+            </p>
+          </div>
         </div>
       </div>
-      <div {...stylex.props(styles.goalInfoRow)}>
-        <div>
-          {cardBody.rowTitle3}{" "}
-          <p {...stylex.props(styles.p)}>{cardBody.rowValue3}</p>
-        </div>
-        <div>
-          {cardBody.rowTitle4}
-          <p {...stylex.props(styles.p)}>{cardBody.rowValue4}</p>
-        </div>
-      </div>
+
       {children}
     </div>
   )

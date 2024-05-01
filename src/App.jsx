@@ -28,6 +28,11 @@ import BehindProgressBar from "./assets/progress-bar/behind-progress-bar.svg"
 import PoorProgressBar from "./assets/progress-bar/poor-progress-bar.svg"
 import AheadProgressBar from "./assets/progress-bar/ahead-progress-bar.svg"
 
+import HeartCheck from "./assets/heart-icon/heart_check.svg"
+import HeartCheckExcellent from "./assets/heart-icon/heart_check_excellent.svg"
+import HeartMinus from "./assets/heart-icon/heart_minus.svg"
+import HeartBroken from "./assets/heart-icon/heart_broken.svg"
+
 const bell = stylex.keyframes({
   "0%": {
     transform: "rotate(0deg)",
@@ -202,7 +207,7 @@ const styles = stylex.create({
     border: "2px solid #D3DBEC",
     borderRadius: "2rem",
     background: "#ffffff",
-    padding: "1.2rem",
+    padding: "2rem",
   },
   sectionTitle: {
     fontWeight: "600",
@@ -246,7 +251,7 @@ const styles = stylex.create({
   goalCardList: {
     display: "flex",
     flexWrap: "wrap",
-    gap: "1rem",
+    gap: "2rem",
     paddingTop: "1.5rem",
     justifyContent: "flex-start",
   },
@@ -309,7 +314,8 @@ const goalItems = [
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
       rowTitle4: "Goal Health",
-      rowValue4: "none",
+      rowValue4: "Excellent",
+      goalHealthIconSource: HeartCheckExcellent,
     },
     footer: {
       progressSource: ExcellentProrgessBar,
@@ -330,7 +336,8 @@ const goalItems = [
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
       rowTitle4: "Goal Health",
-      rowValue4: "none",
+      rowValue4: "Good",
+      goalHealthIconSource: HeartCheck,
     },
     footer: {
       progressSource: OnTrackProgressBar,
@@ -351,7 +358,8 @@ const goalItems = [
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
       rowTitle4: "Goal Health",
-      rowValue4: "none",
+      rowValue4: "Weak",
+      goalHealthIconSource: HeartMinus,
     },
     footer: {
       progressSource: BehindProgressBar,
@@ -372,7 +380,8 @@ const goalItems = [
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
       rowTitle4: "Goal Health",
-      rowValue4: "none",
+      rowValue4: "Poor",
+      goalHealthIconSource: HeartBroken,
     },
     footer: {
       progressSource: PoorProgressBar,
@@ -392,8 +401,8 @@ const goalItems = [
       rowValue2: "15,00,00,000",
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
-      rowTitle4: "Goal Health",
-      rowValue4: "none",
+      rowTitle4: "Goal Reached",
+      rowValue4: "March 2035",
     },
     footer: {
       progressSource: AheadProgressBar,
