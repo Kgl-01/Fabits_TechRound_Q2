@@ -12,10 +12,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh !important;
+  height: 100vh;
+  letter-spacing: 0rem;
+}
+
 body {
   margin: 0;
   display: block;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh !important;
   background: #f4f7fe;
+  position: relative;
 }

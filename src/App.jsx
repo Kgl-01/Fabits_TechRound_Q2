@@ -16,6 +16,12 @@ import AddBusinessIcon from "./assets/navbar/add_business.svg"
 import AdminPanelIcon from "./assets/navbar/admin_panel_settings.svg"
 import TuneIcon from "./assets/navbar/tune_icon.svg"
 
+import RetirementIcon from "./assets/carousel/retirement_icon.svg"
+import EmergencyIcon from "./assets/carousel/emergency_icon.svg"
+import WeddingIcon from "./assets/carousel/wedding_icon.svg"
+import VacationIcon from "./assets/carousel/vacation_icon.svg"
+import GoalCard from "./components/GoalCard.component"
+
 const bell = stylex.keyframes({
   "0%": {
     transform: "rotate(0deg)",
@@ -36,28 +42,53 @@ const bell = stylex.keyframes({
   },
 })
 
+const offset = stylex.keyframes({
+  from: {
+    transform: "translateY(0rem)",
+    transition: "all 250ms",
+  },
+  to: {
+    transform: "translateY(-0.25rem)",
+    transition: "all 250ms",
+  },
+})
+
 const styles = stylex.create({
   containerSection: {
     width: "100%",
-    position: "relative",
     background: "#F4F7FE",
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "1fr 4fr",
+    gridTemplateAreas: "aside main main main",
     gap: "2rem",
+    minHeight: "100% !important",
   },
   aside: {
-    width: "20rem",
-    height: "100vh",
     borderRight: "2px solid #D3DBEC",
-    boxSizing: "border-box",
     background: "#F4F7FE",
     display: "flex",
     padding: "1rem",
-    position: "sticky",
+    minHeight: "100%",
+    position: "relative",
   },
+
+  main: {
+    width: "100%",
+    minHeight: "100%",
+    display: "flex",
+    flexDirection: "column",
+    paddingTop: "3rem",
+    paddingRight: "2rem",
+    gap: "2rem",
+  },
+
   mainNavbar: {
     display: "flex",
     flexDirection: "column",
     width: "100%",
+    position: "sticky",
+    top: "1rem",
+    alignSelf: "flex-start",
   },
   cursor: {
     cursor: "pointer",
@@ -118,31 +149,23 @@ const styles = stylex.create({
     display: "flex",
     gap: "1rem",
   },
-  main: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    boxSizing: "border-box",
-    padding: "3rem 2rem 0rem 0rem",
-  },
+
   bodyHeader: {
     width: "100%",
-    height: "14rem",
+    height: "100%",
     border: "2px solid #D3DBEC",
     borderRadius: "2rem",
-    boxSizing: "border-box",
     background: "#ffffff",
     filter: "drop-shadow(0rem 0.7rem 0.5rem #D3DBEC)",
   },
-  paragraph: (isSubHeader) => ({
+  paragraph: (isSubHeader, isGoalCard) => ({
     padding: "0rem",
     margin: "0rem",
     color: isSubHeader && "#575757",
+    fontSize: isGoalCard && "0.7rem",
   }),
   carouselContainer: {
     display: "flex",
-    boxSizing: "border-box",
     padding: "1.5rem 1.5rem 0rem 1.5rem",
     height: "100%",
   },
@@ -151,6 +174,7 @@ const styles = stylex.create({
     flexDirection: "column",
     position: "relative",
     gap: "0.5rem",
+    height: "12.5rem",
   },
 
   noteStackIcon: {
@@ -164,6 +188,61 @@ const styles = stylex.create({
     fontWeight: "700",
     fontSize: "1.5rem",
     color: "#2D2D2D",
+  },
+
+  goalsContainer: {
+    width: "100%",
+    height: "100%",
+    border: "2px solid #D3DBEC",
+    borderRadius: "2rem",
+    background: "#ffffff",
+    padding: "1.2rem",
+  },
+  sectionTitle: {
+    fontWeight: "600",
+    fontSize: "1.3rem",
+  },
+  goalCard: (isValidItem) => ({
+    flex: "1 1 30%",
+    maxWidth: isValidItem && "30%",
+    aspectRatio: "0.75/1",
+    border: "2px solid #D3DBEC",
+    borderRadius: "2.5rem",
+    padding: "1.2rem",
+    transform: "translateY(0rem)",
+    transition: "all 0.1s",
+    background: "#fff",
+    ":hover": {
+      cursor: "pointer",
+      transform: "translateY(-0.25rem)",
+      transition: "all 0.1s ease-in",
+      filter: "drop-shadow(0rem 1rem 1rem rgba(36, 47, 78, 0.12))",
+    },
+  }),
+  goalCardHeader: {
+    display: "flex",
+    width: "100%",
+    gap: "1.4rem",
+  },
+  goalCardTitle: {
+    fontWeight: "600",
+    fontSize: "1.2rem",
+  },
+  goalInfo: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+  },
+  goalInfoRow: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  goalCardList: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "1rem",
+    paddingTop: "1.5rem",
+    justifyContent: "flex-start",
   },
 })
 
@@ -202,6 +281,131 @@ const insuranceMenuItems = [
     value: "insurance2",
     iconSource: TuneIcon,
   },
+]
+
+const goalItems = [
+  {
+    header: {
+      title: "Dhairyadev & Sayali's",
+      plan: "Vacation Plan 1",
+      imgSrc: VacationIcon,
+    },
+    cardBody: {
+      rowTitle1: "Goal Progress",
+      rowValue1: "11,24,00,000",
+      rowTitle2: "Goal Amount",
+      rowValue2: "15,00,00,000",
+      rowTitle3: "Goal Date",
+      rowValue3: "March 2035",
+      rowTitle4: "Goal Health",
+      rowValue4: "none",
+    },
+    footer: {
+      progressSource: "Hello",
+      status: "Hi",
+    },
+  },
+  {
+    header: {
+      title: "Dhairyadev & Sayali's",
+      plan: "Vacation Plan 1",
+      imgSrc: VacationIcon,
+    },
+    cardBody: {
+      rowTitle1: "Goal Progress",
+      rowValue1: "11,24,00,000",
+      rowTitle2: "Goal Amount",
+      rowValue2: "15,00,00,000",
+      rowTitle3: "Goal Date",
+      rowValue3: "March 2035",
+      rowTitle4: "Goal Health",
+      rowValue4: "none",
+    },
+    footer: {
+      progressSource: "Hello",
+      status: "Hi",
+    },
+  },
+  {
+    header: {
+      title: "Dhairyadev & Sayali's",
+      plan: "Vacation Plan 1",
+      imgSrc: VacationIcon,
+    },
+    cardBody: {
+      rowTitle1: "Goal Progress",
+      rowValue1: "11,24,00,000",
+      rowTitle2: "Goal Amount",
+      rowValue2: "15,00,00,000",
+      rowTitle3: "Goal Date",
+      rowValue3: "March 2035",
+      rowTitle4: "Goal Health",
+      rowValue4: "none",
+    },
+    footer: {
+      progressSource: "Hello",
+      status: "Hi",
+    },
+  },
+  {
+    header: {
+      title: "Dhairyadev & Sayali's",
+      plan: "Vacation Plan 1",
+      imgSrc: VacationIcon,
+    },
+    cardBody: {
+      rowTitle1: "Goal Progress",
+      rowValue1: "11,24,00,000",
+      rowTitle2: "Goal Amount",
+      rowValue2: "15,00,00,000",
+      rowTitle3: "Goal Date",
+      rowValue3: "March 2035",
+      rowTitle4: "Goal Health",
+      rowValue4: "none",
+    },
+    footer: {
+      progressSource: "Hello",
+      status: "Hi",
+    },
+  },
+  {
+    header: {
+      title: "Dhairyadev & Sayali's",
+      plan: "Vacation Plan 1",
+      imgSrc: VacationIcon,
+    },
+    cardBody: {
+      rowTitle1: "Goal Progress",
+      rowValue1: "11,24,00,000",
+      rowTitle2: "Goal Amount",
+      rowValue2: "15,00,00,000",
+      rowTitle3: "Goal Date",
+      rowValue3: "March 2035",
+      rowTitle4: "Goal Health",
+      rowValue4: "none",
+    },
+    footer: {
+      progressSource: "Hello",
+      status: "Hi",
+    },
+  },
+]
+
+const carouselItems = [
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
+  { id: "", icon: "", title: "", description: "" },
 ]
 
 const App = () => {
@@ -321,7 +525,76 @@ const App = () => {
             </div>
           </nav>
         </header>
-        <section></section>
+
+        <section {...stylex.props(styles.goalsContainer)}>
+          <header>
+            <span {...stylex.props(styles.sectionTitle)}>
+              Track current goals
+            </span>
+          </header>
+          <hr style={{ width: "100%" }} />
+          {/* <div {...stylex.props(styles.goalCard)}>
+            <div {...stylex.props(styles.goalCardHeader)}>
+              <img
+                src={VacationIcon}
+                style={{ width: "4rem", aspectRatio: "1/1" }}
+              />
+              <div {...stylex.props(styles.goalCardTitle)}>
+                <span>Dhairyadev & Sayali's</span>
+                <p {...stylex.props(styles.paragraph)}>Vacation Plan 1</p>
+              </div>
+            </div>
+            <hr style={{ width: "100%", border: "1px solid #D3DBEC" }} />
+            <div {...stylex.props(styles.goalInfo)}>
+              <div {...stylex.props(styles.goalInfoRow)}>
+                <div>
+                  Goal Progress{" "}
+                  <p {...stylex.props(styles.paragraph)}>
+                    &#8377; 11,24,00,000
+                  </p>
+                </div>
+                <div>
+                  Goal Amount{" "}
+                  <p {...stylex.props(styles.paragraph(true))}>
+                    &#8377; 15,00,00,000
+                  </p>
+                </div>
+              </div>
+              <div {...stylex.props(styles.goalInfoRow)}>
+                <div>
+                  Goal Date{" "}
+                  <p {...stylex.props(styles.paragraph)}>March 2035</p>
+                </div>
+                <div>
+                  Hello <p {...stylex.props(styles.paragraph)}>Goal Health</p>
+                </div>
+              </div>
+            </div>
+          </div> */}
+          <div {...stylex.props(styles.goalCardList)}>
+            {goalItems.map((goal, index) => (
+              <GoalCard
+                goal={goal}
+                key={index}
+                index={index}
+                listLength={goalItems.length}
+              >
+                <GoalCard.Header />
+                <GoalCard.HorizontalLine />
+                <GoalCard.Body />
+                <GoalCard.HorizontalLine />
+                <GoalCard.Footer />
+              </GoalCard>
+            ))}
+            <div
+              style={{
+                flex: "1 1 20rem",
+                width: "30%",
+                alignSelf: "flex-start",
+              }}
+            ></div>
+          </div>
+        </section>
       </main>
     </section>
   )
