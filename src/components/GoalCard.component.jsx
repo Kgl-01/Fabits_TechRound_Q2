@@ -15,15 +15,19 @@ const styles = stylex.create({
     border: "2px solid #D3DBEC",
     borderRadius: "2.5rem",
     padding: "1.2rem",
-    transform: "translateY(0rem)",
-    transition: "all 0.1s",
-    background: "#fff",
-    ":hover": {
-      cursor: "pointer",
-      transform: "translateY(-0.25rem)",
-      transition: "all 0.1s ease-in",
-      filter: "drop-shadow(0rem 1rem 1rem rgba(36, 47, 78, 0.12))",
+    transform: {
+      default: "translateY(0rem)",
+      ":hover": "translateY(-0.25rem)",
     },
+    transition: {
+      default: "all 0.1s ease-in-out",
+      ":hover": "all 0.1s ease-in",
+    },
+    background: "#fff",
+    filter: {
+      ":hover": "drop-shadow(0rem 1rem 1rem rgba(36, 47, 78, 0.12))",
+    },
+    cursor: "pointer",
   }),
   goalCardHeader: {
     display: "flex",
@@ -122,7 +126,7 @@ const Footer = ({ children }) => {
 
   return (
     <footer>
-      <img src={footer.progressSource} />
+      <img src={footer.progressSource} style={{ width: "100%" }} />
       <p {...stylex.props(styles.p)}>{footer.status}</p>
       {children}
     </footer>

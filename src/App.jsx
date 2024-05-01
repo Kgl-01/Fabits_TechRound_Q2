@@ -22,6 +22,12 @@ import WeddingIcon from "./assets/carousel/wedding_icon.svg"
 import VacationIcon from "./assets/carousel/vacation_icon.svg"
 import GoalCard from "./components/GoalCard.component"
 
+import ExcellentProrgessBar from "./assets/progress-bar/excellent-progress-bar.svg"
+import OnTrackProgressBar from "./assets/progress-bar/ontrack-progress-bar.svg"
+import BehindProgressBar from "./assets/progress-bar/behind-progress-bar.svg"
+import PoorProgressBar from "./assets/progress-bar/poor-progress-bar.svg"
+import AheadProgressBar from "./assets/progress-bar/ahead-progress-bar.svg"
+
 const bell = stylex.keyframes({
   "0%": {
     transform: "rotate(0deg)",
@@ -244,6 +250,11 @@ const styles = stylex.create({
     paddingTop: "1.5rem",
     justifyContent: "flex-start",
   },
+  dummy: {
+    flex: "1 1 20rem",
+    width: "30%",
+    alignSelf: "flex-start",
+  },
 })
 
 const financeMenuItems = [
@@ -301,7 +312,7 @@ const goalItems = [
       rowValue4: "none",
     },
     footer: {
-      progressSource: "Hello",
+      progressSource: ExcellentProrgessBar,
       status: "Hi",
     },
   },
@@ -322,7 +333,7 @@ const goalItems = [
       rowValue4: "none",
     },
     footer: {
-      progressSource: "Hello",
+      progressSource: OnTrackProgressBar,
       status: "Hi",
     },
   },
@@ -343,7 +354,7 @@ const goalItems = [
       rowValue4: "none",
     },
     footer: {
-      progressSource: "Hello",
+      progressSource: BehindProgressBar,
       status: "Hi",
     },
   },
@@ -364,7 +375,7 @@ const goalItems = [
       rowValue4: "none",
     },
     footer: {
-      progressSource: "Hello",
+      progressSource: PoorProgressBar,
       status: "Hi",
     },
   },
@@ -385,7 +396,7 @@ const goalItems = [
       rowValue4: "none",
     },
     footer: {
-      progressSource: "Hello",
+      progressSource: AheadProgressBar,
       status: "Hi",
     },
   },
@@ -586,13 +597,7 @@ const App = () => {
                 <GoalCard.Footer />
               </GoalCard>
             ))}
-            <div
-              style={{
-                flex: "1 1 20rem",
-                width: "30%",
-                alignSelf: "flex-start",
-              }}
-            ></div>
+            <div {...stylex.props(styles.dummy)}></div>
           </div>
         </section>
       </main>
