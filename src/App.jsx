@@ -33,6 +33,8 @@ import HeartCheckExcellent from "./assets/heart-icon/heart_check_excellent.svg"
 import HeartMinus from "./assets/heart-icon/heart_minus.svg"
 import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 
+import WarnIcon from "./assets/warn_icon.svg"
+
 const bell = stylex.keyframes({
   "0%": {
     transform: "rotate(0deg)",
@@ -260,6 +262,36 @@ const styles = stylex.create({
     width: "30%",
     alignSelf: "flex-start",
   },
+  addtionalProps: {
+    display: "flex",
+    width: "100%",
+    background: "rgba(253, 247, 232, 1)",
+    color: "#D99E16",
+    fontSize: "0.8rem",
+    gap: "1rem",
+    padding: "0.5rem 1.2rem",
+    borderRadius: "0.5rem",
+    marginBottom: "1.5rem",
+  },
+
+  baseBtn: {
+    width: "100%",
+    background: "transparent",
+    borderRadius: "0.5rem",
+    padding: "0.5rem",
+    fontSize: {
+      default: "1rem",
+    },
+    cursor: "pointer",
+  },
+  boostBtn: {
+    border: "2px solid #D3DBEC",
+    color: "#41558D",
+    background: "#fff",
+    filter: {
+      default: "drop-shadow(0rem 0.25rem 0.25rem rgba(36, 47, 78, 0.12))",
+    },
+  },
 })
 
 const financeMenuItems = [
@@ -330,11 +362,11 @@ const goalItems = [
     },
     cardBody: {
       rowTitle1: "Goal Progress",
-      rowValue1: "11,24,00,000",
+      rowValue1: "2,70,00,000",
       rowTitle2: "Goal Amount",
-      rowValue2: "15,00,00,000",
+      rowValue2: "5,00,00,000",
       rowTitle3: "Goal Date",
-      rowValue3: "March 2035",
+      rowValue3: "Jan 2040",
       rowTitle4: "Goal Health",
       rowValue4: "Good",
       goalHealthIconSource: HeartCheck,
@@ -352,9 +384,9 @@ const goalItems = [
     },
     cardBody: {
       rowTitle1: "Goal Progress",
-      rowValue1: "11,24,00,000",
+      rowValue1: "42,00,000",
       rowTitle2: "Goal Amount",
-      rowValue2: "15,00,00,000",
+      rowValue2: "1,00,00,000",
       rowTitle3: "Goal Date",
       rowValue3: "March 2035",
       rowTitle4: "Goal Health",
@@ -519,7 +551,6 @@ const App = () => {
           </ul>
         </nav>
         <button {...stylex.props(styles.buttonProps)}>
-          {console.log(navbarRef.current?.clientWidth)}
           <img
             src={ResizeIcon}
             {...stylex.props(
@@ -553,44 +584,6 @@ const App = () => {
             </span>
           </header>
           <hr style={{ width: "100%" }} />
-          {/* <div {...stylex.props(styles.goalCard)}>
-            <div {...stylex.props(styles.goalCardHeader)}>
-              <img
-                src={VacationIcon}
-                style={{ width: "4rem", aspectRatio: "1/1" }}
-              />
-              <div {...stylex.props(styles.goalCardTitle)}>
-                <span>Dhairyadev & Sayali's</span>
-                <p {...stylex.props(styles.paragraph)}>Vacation Plan 1</p>
-              </div>
-            </div>
-            <hr style={{ width: "100%", border: "1px solid #D3DBEC" }} />
-            <div {...stylex.props(styles.goalInfo)}>
-              <div {...stylex.props(styles.goalInfoRow)}>
-                <div>
-                  Goal Progress{" "}
-                  <p {...stylex.props(styles.paragraph)}>
-                    &#8377; 11,24,00,000
-                  </p>
-                </div>
-                <div>
-                  Goal Amount{" "}
-                  <p {...stylex.props(styles.paragraph(true))}>
-                    &#8377; 15,00,00,000
-                  </p>
-                </div>
-              </div>
-              <div {...stylex.props(styles.goalInfoRow)}>
-                <div>
-                  Goal Date{" "}
-                  <p {...stylex.props(styles.paragraph)}>March 2035</p>
-                </div>
-                <div>
-                  Hello <p {...stylex.props(styles.paragraph)}>Goal Health</p>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <div {...stylex.props(styles.goalCardList)}>
             {goalItems.map((goal, index) => (
               <GoalCard
@@ -603,7 +596,23 @@ const App = () => {
                 <GoalCard.HorizontalLine />
                 <GoalCard.Body />
                 <GoalCard.HorizontalLine />
-                <GoalCard.Footer />
+                <GoalCard.Footer>
+                  {goal.cardBody.rowValue4.toLowerCase() == "weak" && (
+                    <>
+                      <div {...stylex.props(styles.addtionalProps)}>
+                        <img src={WarnIcon} />
+                        <span>
+                          <b>Boost</b> to reach your goal sooner!
+                        </span>
+                      </div>
+                      <button
+                        {...stylex.props(styles.baseBtn, styles.boostBtn)}
+                      >
+                        Boost
+                      </button>
+                    </>
+                  )}
+                </GoalCard.Footer>
               </GoalCard>
             ))}
             <div {...stylex.props(styles.dummy)}></div>

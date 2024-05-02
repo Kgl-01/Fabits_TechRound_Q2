@@ -11,7 +11,7 @@ const styles = stylex.create({
     flex: "1 1 20rem",
     // flexGrow: isValidIndex && "0",
     width: "30%",
-    aspectRatio: "0.75/1",
+    // aspectRatio: "0.75/1",
     border: "2px solid #D3DBEC",
     borderRadius: "2.5rem",
     padding: "1.2rem",
@@ -25,9 +25,8 @@ const styles = stylex.create({
     },
     background: "#fff",
     filter: {
-      ":hover": "drop-shadow(0rem 1rem 1rem rgba(36, 47, 78, 0.12))",
+      ":hover": "drop-shadow(0rem 0.25rem 0.25rem rgba(36, 47, 78, 0.12))",
     },
-    cursor: "pointer",
   }),
   goalCardHeader: {
     display: "flex",
@@ -55,12 +54,18 @@ const styles = stylex.create({
     flexDirection: "column",
     gap: "1rem",
   },
+  goalItem: {
+    color: "#727272",
+    fontSize: "0.8rem",
+  },
   p: {
     padding: 0,
     margin: 0,
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
+    fontSize: "0.9rem",
+    color: "#000",
   },
   excellent: {
     color: "#5B8350",
@@ -125,23 +130,23 @@ const CardBody = ({ children }) => {
     <div {...stylex.props(styles.goalInfo)}>
       <div {...stylex.props(styles.goalInfoWrapper)}>
         <div {...stylex.props(styles.goalInfoRow)}>
-          <div>
+          <div {...stylex.props(styles.goalItem)}>
             {cardBody.rowTitle1}
             <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue1}</p>
           </div>
 
-          <div>
+          <div {...stylex.props(styles.goalItem)}>
             {cardBody.rowTitle3}{" "}
             <p {...stylex.props(styles.p)}>{cardBody.rowValue3}</p>
           </div>
         </div>
         <div {...stylex.props(styles.goalInfoRow)}>
-          <div>
+          <div {...stylex.props(styles.goalItem)}>
             {cardBody.rowTitle2}
             <p {...stylex.props(styles.p)}>&#8377; {cardBody.rowValue2}</p>
           </div>
 
-          <div>
+          <div {...stylex.props(styles.goalItem)}>
             {cardBody.rowTitle4}
             <p
               {...stylex.props(
@@ -154,7 +159,6 @@ const CardBody = ({ children }) => {
                 {...stylex.props(
                   styles[`${cardBody.rowValue4?.toLowerCase()}`]
                 )}
-                fill="red"
               />
               <>{cardBody.rowValue4}</>
             </p>
@@ -174,7 +178,10 @@ const Footer = ({ children }) => {
 
   return (
     <footer>
-      <img src={footer.progressSource} style={{ width: "100%" }} />
+      <img
+        src={footer.progressSource}
+        style={{ width: "100%", cursor: "pointer" }}
+      />
       <p {...stylex.props(styles.p)}>{footer.status}</p>
       {children}
     </footer>
