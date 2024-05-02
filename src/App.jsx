@@ -90,7 +90,7 @@ const styles = stylex.create({
     minHeight: "100%",
     display: "flex",
     flexDirection: "column",
-    paddingTop: "3rem",
+    padding: "3rem 0rem",
     paddingRight: "2rem",
     gap: "2rem",
   },
@@ -442,7 +442,7 @@ const goalItems = [
       progressSource: PoorProgressBar,
       status: {
         message: "Goal behind by",
-        duration: "16 months",
+        duration: "18 months",
       },
     },
   },
