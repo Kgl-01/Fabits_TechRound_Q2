@@ -68,6 +68,14 @@ const styles = stylex.create({
     color: "#000",
     fontWeight: "600",
   },
+  status: {
+    color: "rgba(87, 87, 87, 1)",
+    padding: "0rem",
+    margin: "0rem 0rem 1rem 0rem",
+    fontSize: "0.8rem",
+    display: "flex",
+    gap: "0.2rem",
+  },
   excellent: {
     color: "#5B8350",
     fill: "#5B8350",
@@ -85,6 +93,14 @@ const styles = stylex.create({
   poor: {
     color: "#E85D5D",
     fontWeight: "600",
+  },
+  reached: {
+    color: "#3B4D80",
+    fontWeight: "600",
+  },
+  inlineSpan: {
+    padding: "0rem",
+    margin: "0rem",
   },
 })
 
@@ -172,18 +188,38 @@ const CardBody = ({ children }) => {
   )
 }
 
-const Footer = ({ children }) => {
+const Footer = ({ children, hasSecondaryText }) => {
   const {
-    goal: { footer },
+    goal: { footer, cardBody },
   } = useGoal()
 
   return (
     <footer>
       <img
         src={footer.progressSource}
-        style={{ width: "100%", cursor: "pointer" }}
+        style={{
+          width: "100%",
+          cursor: "pointer",
+          margin: "0rem",
+          padding: "0rem",
+        }}
       />
-      <p {...stylex.props(styles.p)}>{footer.status}</p>
+      <p {...stylex.props(styles.p, styles.status)}>
+        {footer.status.message}{" "}
+        <span
+          {...stylex.props(
+            styles.inlineSpan,
+            styles?.[
+              !hasSecondaryText
+                ? `${cardBody?.rowValue4?.toLowerCase()}`
+                : "reached"
+            ]
+          )}
+        >
+          {footer.status?.duration}
+        </span>{" "}
+        {hasSecondaryText && "ahead"}
+      </p>
       {children}
     </footer>
   )

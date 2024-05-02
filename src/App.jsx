@@ -292,6 +292,21 @@ const styles = stylex.create({
       default: "drop-shadow(0rem 0.25rem 0.25rem rgba(36, 47, 78, 0.12))",
     },
   },
+  excellent: {
+    color: "rgba(91, 131, 80, 1)",
+  },
+  good: {
+    color: "#74A766",
+  },
+  week: {
+    color: "#D99E16",
+  },
+  poor: {
+    color: "rgba(232, 93, 93, 1)",
+  },
+  ahead: {
+    color: "rgba(59, 77, 128, 1)",
+  },
 })
 
 const financeMenuItems = [
@@ -351,7 +366,10 @@ const goalItems = [
     },
     footer: {
       progressSource: ExcellentProrgessBar,
-      status: "Hi",
+      status: {
+        message: "Goal ahead by",
+        duration: "16 months",
+      },
     },
   },
   {
@@ -373,7 +391,9 @@ const goalItems = [
     },
     footer: {
       progressSource: OnTrackProgressBar,
-      status: "Hi",
+      status: {
+        message: "On track",
+      },
     },
   },
   {
@@ -395,7 +415,10 @@ const goalItems = [
     },
     footer: {
       progressSource: BehindProgressBar,
-      status: "Hi",
+      status: {
+        message: "Goal behind by",
+        duration: "2 months",
+      },
     },
   },
   {
@@ -417,7 +440,10 @@ const goalItems = [
     },
     footer: {
       progressSource: PoorProgressBar,
-      status: "Hi",
+      status: {
+        message: "Goal behind by",
+        duration: "16 months",
+      },
     },
   },
   {
@@ -438,7 +464,10 @@ const goalItems = [
     },
     footer: {
       progressSource: AheadProgressBar,
-      status: "Hi",
+      status: {
+        message: "Goal reached",
+        duration: "3 months",
+      },
     },
   },
 ]
@@ -596,7 +625,9 @@ const App = () => {
                 <GoalCard.HorizontalLine />
                 <GoalCard.Body />
                 <GoalCard.HorizontalLine />
-                <GoalCard.Footer>
+                <GoalCard.Footer
+                  hasSecondaryText={index == goalItems.length - 1}
+                >
                   {goal.cardBody.rowValue4.toLowerCase() == "weak" && (
                     <>
                       <div {...stylex.props(styles.addtionalProps)}>
