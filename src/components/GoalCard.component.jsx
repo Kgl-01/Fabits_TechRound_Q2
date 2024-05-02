@@ -66,6 +66,7 @@ const styles = stylex.create({
     gap: "0.5rem",
     fontSize: "0.9rem",
     color: "#000",
+    fontWeight: "600",
   },
   excellent: {
     color: "#5B8350",
