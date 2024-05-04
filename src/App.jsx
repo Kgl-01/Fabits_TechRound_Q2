@@ -20,6 +20,7 @@ import RetirementIcon from "./assets/carousel/retirement_icon.svg"
 import EmergencyIcon from "./assets/carousel/emergency_icon.svg"
 import WeddingIcon from "./assets/carousel/wedding_icon.svg"
 import VacationIcon from "./assets/carousel/vacation_icon.svg"
+
 import GoalCard from "./components/GoalCard.component"
 
 import ExcellentProrgessBar from "./assets/progress-bar/excellent-progress-bar.svg"
@@ -34,7 +35,8 @@ import HeartMinus from "./assets/heart-icon/heart_minus.svg"
 import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 
 import WarnIcon from "./assets/warn_icon.svg"
-import Slider from "./components/Slider/Slider.component"
+import SliderContainer from "./components/Slider/Slider.component"
+import PlanCard from "./components/PlanCard/PlanCard.component"
 
 const bell = stylex.keyframes({
   "0%": {
@@ -69,11 +71,11 @@ const offset = stylex.keyframes({
 
 const styles = stylex.create({
   containerSection: {
-    width: "100%",
+    width: "100% !important",
     background: "#F4F7FE",
-    display: "grid",
-    gridTemplateColumns: "1fr 4fr",
-    gridTemplateAreas: "aside main main main",
+    display: "flex",
+    // gridTemplateColumns: "1fr 4fr",
+    // gridTemplateAreas: "aside main main main",
     gap: "2rem",
     minHeight: "100% !important",
   },
@@ -87,12 +89,12 @@ const styles = stylex.create({
   },
 
   main: {
-    width: "100%",
+    width: "80%",
     minHeight: "100%",
     display: "flex",
     flexDirection: "column",
     padding: "3rem 0rem",
-    paddingRight: "2rem",
+    paddingRight: "0rem",
     gap: "2rem",
   },
 
@@ -153,11 +155,6 @@ const styles = stylex.create({
   }),
   activeNavItem: {
     display: "none",
-    ":checked": {
-      ":focus-within": {
-        border: "1px solid red",
-      },
-    },
   },
   flex: {
     display: "flex",
@@ -166,14 +163,14 @@ const styles = stylex.create({
 
   bodyHeader: {
     width: "100%",
-    height: "100%",
+    height: "18rem",
     border: "2px solid #D3DBEC",
     borderRadius: "2rem",
     background: "#ffffff",
     filter: "drop-shadow(0rem 0.7rem 0.5rem #D3DBEC)",
     display: "flex",
     gap: "1rem",
-    padding: "1.5rem",
+    padding: "1rem 0rem 0rem 1rem",
   },
   paragraph: (isSubHeader, isGoalCard) => ({
     padding: "0rem",
@@ -188,12 +185,14 @@ const styles = stylex.create({
     position: "relative",
     gap: "0.5rem",
     height: "12rem",
+    width: "25%",
   }),
   headerQueryTitle: {
     margin: "0",
     fontWeight: "700",
     fontSize: "1.5rem",
     color: "#2D2D2D",
+    lineHeight: "1.6rem",
   },
 
   noteStackIcon: {
@@ -479,25 +478,111 @@ const goalItems = [
 ]
 
 const carouselItems = [
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
-  { id: "", icon: "", title: "", description: "" },
+  {
+    id: 1,
+    src: RetirementIcon,
+    label: "Retirement",
+    description: "Your old age taken care of.",
+    isActive: false,
+  },
+  {
+    id: 2,
+    src: EmergencyIcon,
+    label: "Emergency",
+    description: "Be prepared at all times.",
+    isActive: false,
+  },
+  {
+    id: 3,
+    src: WeddingIcon,
+    label: "Wedding",
+    description: "Plan your dream wedding today.",
+    isActive: false,
+  },
+  {
+    id: 4,
+    src: VacationIcon,
+    label: "Vacation",
+    description: "Never too late for Bahamas!.",
+    isActive: false,
+  },
+  {
+    id: 5,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 6,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 7,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 8,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 9,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 10,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 11,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 12,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 13,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
+  {
+    id: 14,
+    src: RetirementIcon,
+    label: "Education",
+    description: "Build your career, tension-free.",
+    isActive: false,
+  },
 ]
 
 const App = () => {
   const navbarRef = useRef(null)
   const [activeNavItem, setActiveNavItem] = useState(financeMenuItems[0].value)
+  const [activeId, setActiveId] = useState(null)
+  const [categoryItems, setCategoryItems] = useState(carouselItems)
   const isExpand = useRef(false)
   const [expand, setExpand] = useState(false)
 
@@ -505,8 +590,12 @@ const App = () => {
   //   console.log(navbarRef.current?.clientWidth)
   // }, [])
 
+  const handleActiveId = (id) => {
+    setActiveId(id)
+  }
+
   return (
-    <section {...stylex.props(styles.containerSection)}>
+    <div {...stylex.props(styles.containerSection)}>
       <aside {...stylex.props(styles.aside)} ref={navbarRef}>
         <nav {...stylex.props(styles.mainNavbar)}>
           <header {...stylex.props(styles.navHeader)}>
@@ -596,7 +685,7 @@ const App = () => {
           />
         </button>
       </aside>
-      <main {...stylex.props(styles.main)}>
+      <div {...stylex.props(styles.main)}>
         <header {...stylex.props(styles.bodyHeader)}>
           <div {...stylex.props(styles.headerQuery)}>
             <span {...stylex.props(styles.headerQueryTitle)}>
@@ -607,29 +696,20 @@ const App = () => {
             </p>
           </div>
           <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
-          <nav {...stylex.props(styles.carouselContainer)}>
-            <Slider
-              onClick={() => {
-                if (!isExpand.current) {
-                  setExpand(true)
-                }
-              }}
-            >
-              {Array.from({ length: 14 }, (_, i) => (
-                <div
-                  style={{
-                    width: "30%",
-                    aspectRatio: "1/1",
-                    border: "1px solid blue",
-                  }}
-                  key={i}
-                  data-track-arrow={i}
-                >
-                  {i + 1}
-                </div>
+
+          <SliderContainer dataLength={categoryItems.length - 1}>
+            <SliderContainer.Slider>
+              {categoryItems.map((item, idx) => (
+                <SliderContainer.Item key={idx}>
+                  <PlanCard
+                    plan={item}
+                    activeId={activeId}
+                    handleActiveId={handleActiveId}
+                  />
+                </SliderContainer.Item>
               ))}
-            </Slider>
-          </nav>
+            </SliderContainer.Slider>
+          </SliderContainer>
         </header>
 
         <section {...stylex.props(styles.goalsContainer)}>
@@ -675,8 +755,8 @@ const App = () => {
             <div {...stylex.props(styles.dummy)}></div>
           </div>
         </section>
-      </main>
-    </section>
+      </div>
+    </div>
   )
 }
 

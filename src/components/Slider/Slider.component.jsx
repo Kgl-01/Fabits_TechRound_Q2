@@ -1,137 +1,114 @@
 import * as stylex from "@stylexjs/stylex"
-import Arrow from "../../assets/carousel/left_arrow.svg"
-import { useCallback, useEffect, useRef, useState } from "react"
+
+import ArrowIcon from "../../assets/carousel/left_arrow.svg"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
+import { rootStyles } from "../../rootStyling.stylex"
 
 const styles = stylex.create({
-  sliderContainer: {
-    width: "100%",
-    height: "100%",
-    border: "1px solid red",
-    padding: "0.7rem",
+  container: {
     display: "flex",
-    gap: "1rem",
-    overflow: "auto",
-    scrollbarWidth: "none",
+    overflow: "hidden",
     position: "relative",
-    alignItems: "center",
-    pointerEvents: "none",
-  },
-  rotateArrow: (isCustom) => ({
-    rotate: !isCustom && "180deg",
-  }),
-
-  arrow: {
-    cursor: "pointer",
-    zIndex: "1",
-    pointerEvents: "all",
-  },
-  leftArrow: (show) => ({
-    position: "absolute",
-    left: "0rem",
-    display: show ? "block" : "none",
-  }),
-  rightArrow: (show) => ({
-    position: "absolute",
-    right: "0rem",
-    display: show ? "block" : "none",
-  }),
-  childrenContainer: (translate) => ({
     width: "100%",
+  },
+  slider: (sliderIndex) => ({
     display: "flex",
-    scrollbarWidth: "none",
-    gap: "1rem",
-    height: "100%",
-    transform: `translateX(${translate}%)`,
-    transition: "transform 0.25s ease-in-out",
+    transform: `translateX(calc(${sliderIndex} * -13%))`,
+    margin: "0rem .25rem",
+    flexGrow: 1,
+    transition: "transform 1s ease-in-out",
+    alignItems: "center !important",
   }),
+  item: {
+    flex: "0 0 15%",
+    maxWidth: "15%",
+    aspectRatio: "1/1",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  leftHandle: {
+    background: "linear-gradient(to right, white,rgba(255,255,255,0.4))",
+    boxShadow: "-1rem 0rem 2rem rgba(255,255,255,1)",
+    left: 0,
+  },
+  rightHandle: {
+    rotate: "180deg",
+    background: "linear-gradient(to left,rgba(255,255,255,0.5), white)",
+    // boxShadow: "1rem 0rem 3rem rgba(0,0,0,0.25)",
+    borderRadius: "2rem 0rem 0rem 0.6rem",
+    right: 0,
+  },
+  handle: {
+    width: rootStyles.sliderPadding,
+    zIndex: 10,
+    cursor: "pointer",
+    flexGrow: "0",
+    position: "absolute",
+    border: "none",
+    height: "100%",
+  },
 })
 
-const Slider = ({ children, ...props }) => {
-  const { leftArrow, rightArrow } = props
-  const [translate, setTranslate] = useState(0)
-  const sliderRef = useRef(null)
-  const containerRef = useRef(null)
+const SliderContext = createContext({
+  sliderIndex: null,
+})
 
-  const [showLeftArrow, setShowLeftArrow] = useState(false)
-  const [showRightArrow, setShowRightArrow] = useState(true)
+const SliderContainer = ({ children, dataLength, ...props }) => {
+  const [sliderIndex, setSliderIndex] = useState(0)
 
-  const handleSlideLeft = () => {
-    setTranslate((currentTranslate) => currentTranslate + 30)
-  }
-  const handleSlideRight = () => {
-    setTranslate((currentTranslate) => currentTranslate - 30)
+  const moveLeft = () => {
+    setSliderIndex((c) => c - 2)
   }
 
-  useEffect(() => {
-    const container = containerRef.current
-    const slider = sliderRef.current
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const element = entry.target
-
-          console.log(container.offsetLeft)
-
-          const trackArrow = entry.target.dataset.trackArrow
-
-          if (trackArrow == 0) {
-            setShowLeftArrow(!entry.isIntersecting)
-            console.log(`element ${trackArrow}:` + element.offsetLeft)
-          } else {
-            setShowRightArrow(!entry.isIntersecting)
-            console.log(`element ${trackArrow}:` + element.offsetLeft)
-          }
-        })
-      },
-      {
-        root: slider,
-        threshold: 1,
-      }
-    )
-    if (container != null) {
-      const children = container.children
-      const filteredChildren = [...children].filter(
-        (child, index) => index == 0 || index == children.length - 1
-      )
-
-      console.log({ filteredChildren })
-
-      filteredChildren.forEach((child, index) => {
-        observer.observe(child)
-      })
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [translate])
+  const moveRight = () => {
+    setSliderIndex((c) => c + 2)
+  }
 
   return (
-    <div ref={sliderRef} {...stylex.props(styles.sliderContainer)} {...props}>
-      <img
-        alt="left-arrow"
-        src={leftArrow ? leftArrow : Arrow}
-        {...stylex.props(styles.arrow, styles.leftArrow(showLeftArrow))}
-        onClick={handleSlideLeft}
-      />
-      <img
-        alt="right-arrow"
-        src={rightArrow ? rightArrow : Arrow}
-        {...stylex.props(
-          styles.rotateArrow(rightArrow),
-          styles.arrow,
-          styles.rightArrow(showRightArrow)
-        )}
-        onClick={handleSlideRight}
-      />
-      <div
-        {...stylex.props(styles.childrenContainer(translate))}
-        ref={containerRef}
-      >
+    <div {...props} {...stylex.props(styles.container)}>
+      {sliderIndex != 0 && (
+        <button
+          {...stylex.props(styles.leftHandle, styles.handle)}
+          onClick={moveLeft}
+        >
+          <img src={ArrowIcon} />
+        </button>
+      )}
+      <SliderContext.Provider value={{ sliderIndex }}>
         {children}
-      </div>
+      </SliderContext.Provider>
+
+      {sliderIndex < dataLength * (3 / 4) && (
+        <button
+          {...stylex.props(styles.rightHandle, styles.handle)}
+          onClick={moveRight}
+        >
+          <img src={ArrowIcon} />
+        </button>
+      )}
     </div>
   )
 }
 
-export default Slider
+const Slider = ({ children, ...props }) => {
+  const { sliderIndex } = useContext(SliderContext)
+  return (
+    <div {...props} {...stylex.props(styles.slider(sliderIndex))}>
+      {children}
+    </div>
+  )
+}
+
+const Item = ({ children, ...props }) => {
+  return (
+    <div {...props} {...stylex.props(styles.item)}>
+      {children}
+    </div>
+  )
+}
+
+SliderContainer.Slider = Slider
+SliderContainer.Item = Item
+
+export default SliderContainer
