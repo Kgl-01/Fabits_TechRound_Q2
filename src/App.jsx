@@ -34,6 +34,7 @@ import HeartMinus from "./assets/heart-icon/heart_minus.svg"
 import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 
 import WarnIcon from "./assets/warn_icon.svg"
+import Slider from "./components/Slider/Slider.component"
 
 const bell = stylex.keyframes({
   "0%": {
@@ -179,7 +180,7 @@ const styles = stylex.create({
   }),
   carouselContainer: {
     display: "flex",
-    padding: "1.5rem 1.5rem 0rem 1.5rem",
+    padding: "1.5rem",
     height: "100%",
   },
   carouselQueryContainer: {
@@ -193,7 +194,7 @@ const styles = stylex.create({
   noteStackIcon: {
     position: "absolute",
     bottom: "0",
-    left: "2rem",
+    left: "3rem",
   },
 
   carouselQueryHeader: {
@@ -593,16 +594,27 @@ const App = () => {
           <nav {...stylex.props(styles.carouselContainer)}>
             <div {...stylex.props(styles.carouselQueryContainer)}>
               <span {...stylex.props(styles.carouselQueryHeader)}>
-                What financial goal do{" "}
-                <p {...stylex.props(styles.paragraph)}>
-                  you want to plan today?
-                </p>
+                What financial goal do you want to plan today?
               </span>
               <p {...stylex.props(styles.paragraph(true))}>
                 Select a goal to start planning.
               </p>
-              <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
             </div>
+            <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
+            <Slider>
+              {Array.from({ length: 10 }, (_, i) => (
+                <div
+                  style={{
+                    width: "30%",
+                    aspectRatio: "1/1",
+                    border: "1px solid blue",
+                  }}
+                  key={i}
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </Slider>
           </nav>
         </header>
 
