@@ -1,6 +1,6 @@
 import * as stylex from "@stylexjs/stylex"
 import Arrow from "../../assets/carousel/left_arrow.svg"
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const styles = stylex.create({
   sliderContainer: {
@@ -14,6 +14,7 @@ const styles = stylex.create({
     scrollbarWidth: "none",
     position: "relative",
     alignItems: "center",
+    pointerEvents: "none",
   },
   rotateArrow: (isCustom) => ({
     rotate: !isCustom && "180deg",
@@ -22,43 +23,95 @@ const styles = stylex.create({
   arrow: {
     cursor: "pointer",
     zIndex: "1",
+    pointerEvents: "all",
   },
-  leftArrow: {
+  leftArrow: (show) => ({
     position: "absolute",
     left: "0rem",
-  },
-  rightArrow: {
+    display: show ? "block" : "none",
+  }),
+  rightArrow: (show) => ({
     position: "absolute",
     right: "0rem",
-  },
-  childrenContainer: (marginLeft) => ({
+    display: show ? "block" : "none",
+  }),
+  childrenContainer: (translate) => ({
     width: "100%",
     display: "flex",
     scrollbarWidth: "none",
     gap: "1rem",
     height: "100%",
-    transform: `translateX(${marginLeft}%)`,
+    transform: `translateX(${translate}%)`,
     transition: "transform 0.25s ease-in-out",
   }),
 })
 
 const Slider = ({ children, ...props }) => {
   const { leftArrow, rightArrow } = props
-  const [margin, setMargin] = useState(0)
+  const [translate, setTranslate] = useState(0)
+  const sliderRef = useRef(null)
+  const containerRef = useRef(null)
+
+  const [showLeftArrow, setShowLeftArrow] = useState(false)
+  const [showRightArrow, setShowRightArrow] = useState(true)
 
   const handleSlideLeft = () => {
-    setMargin((currentMargin) => currentMargin - 30)
+    setTranslate((currentTranslate) => currentTranslate + 30)
   }
   const handleSlideRight = () => {
-    setMargin((currentMargin) => currentMargin + 30)
+    setTranslate((currentTranslate) => currentTranslate - 30)
   }
 
+  useEffect(() => {
+    const container = containerRef.current
+    const slider = sliderRef.current
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const element = entry.target
+
+          console.log(container.offsetLeft)
+
+          const trackArrow = entry.target.dataset.trackArrow
+
+          if (trackArrow == 0) {
+            setShowLeftArrow(!entry.isIntersecting)
+            console.log(`element ${trackArrow}:` + element.offsetLeft)
+          } else {
+            setShowRightArrow(!entry.isIntersecting)
+            console.log(`element ${trackArrow}:` + element.offsetLeft)
+          }
+        })
+      },
+      {
+        root: slider,
+        threshold: 1,
+      }
+    )
+    if (container != null) {
+      const children = container.children
+      const filteredChildren = [...children].filter(
+        (child, index) => index == 0 || index == children.length - 1
+      )
+
+      console.log({ filteredChildren })
+
+      filteredChildren.forEach((child, index) => {
+        observer.observe(child)
+      })
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [translate])
+
   return (
-    <div {...stylex.props(styles.sliderContainer)} {...props}>
+    <div ref={sliderRef} {...stylex.props(styles.sliderContainer)} {...props}>
       <img
         alt="left-arrow"
         src={leftArrow ? leftArrow : Arrow}
-        {...stylex.props(styles.arrow, styles.leftArrow)}
+        {...stylex.props(styles.arrow, styles.leftArrow(showLeftArrow))}
         onClick={handleSlideLeft}
       />
       <img
@@ -67,11 +120,16 @@ const Slider = ({ children, ...props }) => {
         {...stylex.props(
           styles.rotateArrow(rightArrow),
           styles.arrow,
-          styles.rightArrow
+          styles.rightArrow(showRightArrow)
         )}
         onClick={handleSlideRight}
       />
-      <div {...stylex.props(styles.childrenContainer(margin))}> {children}</div>
+      <div
+        {...stylex.props(styles.childrenContainer(translate))}
+        ref={containerRef}
+      >
+        {children}
+      </div>
     </div>
   )
 }

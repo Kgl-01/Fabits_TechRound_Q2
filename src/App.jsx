@@ -171,6 +171,9 @@ const styles = stylex.create({
     borderRadius: "2rem",
     background: "#ffffff",
     filter: "drop-shadow(0rem 0.7rem 0.5rem #D3DBEC)",
+    display: "flex",
+    gap: "1rem",
+    padding: "1.5rem",
   },
   paragraph: (isSubHeader, isGoalCard) => ({
     padding: "0rem",
@@ -178,17 +181,19 @@ const styles = stylex.create({
     color: isSubHeader && "#575757",
     fontSize: isGoalCard && "0.7rem",
   }),
-  carouselContainer: {
-    display: "flex",
-    padding: "1.5rem",
-    height: "100%",
-  },
-  carouselQueryContainer: {
+
+  headerQuery: (show) => ({
     display: "flex",
     flexDirection: "column",
     position: "relative",
     gap: "0.5rem",
-    height: "12.5rem",
+    height: "12rem",
+  }),
+  headerQueryTitle: {
+    margin: "0",
+    fontWeight: "700",
+    fontSize: "1.5rem",
+    color: "#2D2D2D",
   },
 
   noteStackIcon: {
@@ -197,11 +202,11 @@ const styles = stylex.create({
     left: "3rem",
   },
 
-  carouselQueryHeader: {
-    margin: "0",
-    fontWeight: "700",
-    fontSize: "1.5rem",
-    color: "#2D2D2D",
+  carouselContainer: {
+    display: "flex",
+    height: "100%",
+    width: "100%",
+    transition: "all 1s ease-out",
   },
 
   goalsContainer: {
@@ -493,10 +498,12 @@ const carouselItems = [
 const App = () => {
   const navbarRef = useRef(null)
   const [activeNavItem, setActiveNavItem] = useState(financeMenuItems[0].value)
+  const isExpand = useRef(false)
+  const [expand, setExpand] = useState(false)
 
-  useEffect(() => {
-    console.log(navbarRef.current?.clientWidth)
-  }, [])
+  // useEffect(() => {
+  //   console.log(navbarRef.current?.clientWidth)
+  // }, [])
 
   return (
     <section {...stylex.props(styles.containerSection)}>
@@ -591,18 +598,24 @@ const App = () => {
       </aside>
       <main {...stylex.props(styles.main)}>
         <header {...stylex.props(styles.bodyHeader)}>
+          <div {...stylex.props(styles.headerQuery)}>
+            <span {...stylex.props(styles.headerQueryTitle)}>
+              What financial goal do you want to plan today?
+            </span>
+            <p {...stylex.props(styles.paragraph(true))}>
+              Select a goal to start planning.
+            </p>
+          </div>
+          <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
           <nav {...stylex.props(styles.carouselContainer)}>
-            <div {...stylex.props(styles.carouselQueryContainer)}>
-              <span {...stylex.props(styles.carouselQueryHeader)}>
-                What financial goal do you want to plan today?
-              </span>
-              <p {...stylex.props(styles.paragraph(true))}>
-                Select a goal to start planning.
-              </p>
-            </div>
-            <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
-            <Slider>
-              {Array.from({ length: 10 }, (_, i) => (
+            <Slider
+              onClick={() => {
+                if (!isExpand.current) {
+                  setExpand(true)
+                }
+              }}
+            >
+              {Array.from({ length: 14 }, (_, i) => (
                 <div
                   style={{
                     width: "30%",
@@ -610,6 +623,7 @@ const App = () => {
                     border: "1px solid blue",
                   }}
                   key={i}
+                  data-track-arrow={i}
                 >
                   {i + 1}
                 </div>
