@@ -1,4 +1,5 @@
 import * as styleX from "@stylexjs/stylex"
+import { useSliderContext } from "../../context/sliderContext/useSliderConext"
 
 const styles = styleX.create({
   container: (isActive) => ({
@@ -14,6 +15,7 @@ const styles = styleX.create({
     boxSizing: "border-box",
     padding: "0.5rem 0rem 0rem 0.3rem",
     transition: "boxShadow 1s ease-out !important",
+    background: "#fff",
   }),
   title: {
     fontWeight: "600",
@@ -29,11 +31,13 @@ const styles = styleX.create({
   },
 })
 
-const PlanCard = ({ plan, activeId, handleActiveId }) => {
+const PlanCard = ({ plan }) => {
+  const { activeId, handleActiveItemId } = useSliderContext()
+
   return (
     <div
       {...styleX.props(styles.container(plan.id == activeId))}
-      onClick={() => handleActiveId(plan.id)}
+      onClick={() => handleActiveItemId(plan.id)}
     >
       <img src={plan.src} {...styleX.props(styles.img)} />
       <div {...styleX.props(styles.title)}>{plan?.label}</div>

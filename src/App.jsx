@@ -37,6 +37,8 @@ import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 import WarnIcon from "./assets/warn_icon.svg"
 import SliderContainer from "./components/Slider/Slider.component"
 import PlanCard from "./components/PlanCard/PlanCard.component"
+import { SliderContextProvider } from "./context/sliderContext/SliderContextProvider"
+import { useSliderContext } from "./context/sliderContext/useSliderConext"
 
 const bell = stylex.keyframes({
   "0%": {
@@ -179,27 +181,28 @@ const styles = stylex.create({
     fontSize: isGoalCard && "0.7rem",
   }),
 
-  headerQuery: (show) => ({
-    display: "flex",
+  headerQuery: (isExpanded) => ({
+    display: isExpanded ? "none" : "flex",
     flexDirection: "column",
     position: "relative",
     gap: "0.5rem",
     height: "12rem",
-    width: "25%",
+    width: "40%",
   }),
   headerQueryTitle: {
     margin: "0",
     fontWeight: "700",
-    fontSize: "1.5rem",
+    fontSize: "clamp(0.75rem,2vw,1.5rem)",
     color: "#2D2D2D",
     lineHeight: "1.6rem",
   },
 
-  noteStackIcon: {
+  noteStackIcon: (isExpanded) => ({
     position: "absolute",
     bottom: "0",
     left: "3rem",
-  },
+    display: isExpanded ? "none" : "block",
+  }),
 
   carouselContainer: {
     display: "flex",
@@ -483,116 +486,92 @@ const carouselItems = [
     src: RetirementIcon,
     label: "Retirement",
     description: "Your old age taken care of.",
-    isActive: false,
   },
   {
     id: 2,
     src: EmergencyIcon,
     label: "Emergency",
     description: "Be prepared at all times.",
-    isActive: false,
   },
   {
     id: 3,
     src: WeddingIcon,
     label: "Wedding",
     description: "Plan your dream wedding today.",
-    isActive: false,
   },
   {
     id: 4,
     src: VacationIcon,
     label: "Vacation",
     description: "Never too late for Bahamas!.",
-    isActive: false,
   },
   {
     id: 5,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 6,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 7,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 8,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 9,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 10,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 11,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 12,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 13,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
   {
     id: 14,
     src: RetirementIcon,
     label: "Education",
     description: "Build your career, tension-free.",
-    isActive: false,
   },
 ]
 
 const App = () => {
   const navbarRef = useRef(null)
   const [activeNavItem, setActiveNavItem] = useState(financeMenuItems[0].value)
-  const [activeId, setActiveId] = useState(null)
+  const { expandSlider } = useSliderContext()
   const [categoryItems, setCategoryItems] = useState(carouselItems)
-  const isExpand = useRef(false)
-  const [expand, setExpand] = useState(false)
-
-  // useEffect(() => {
-  //   console.log(navbarRef.current?.clientWidth)
-  // }, [])
-
-  const handleActiveId = (id) => {
-    setActiveId(id)
-  }
 
   return (
     <div {...stylex.props(styles.containerSection)}>
@@ -685,9 +664,10 @@ const App = () => {
           />
         </button>
       </aside>
+
       <div {...stylex.props(styles.main)}>
         <header {...stylex.props(styles.bodyHeader)}>
-          <div {...stylex.props(styles.headerQuery)}>
+          <div {...stylex.props(styles.headerQuery(expandSlider))}>
             <span {...stylex.props(styles.headerQueryTitle)}>
               What financial goal do you want to plan today?
             </span>
@@ -695,17 +675,16 @@ const App = () => {
               Select a goal to start planning.
             </p>
           </div>
-          <img src={NoteStackAdd} {...stylex.props(styles.noteStackIcon)} />
+          <img
+            src={NoteStackAdd}
+            {...stylex.props(styles.noteStackIcon(expandSlider))}
+          />
 
           <SliderContainer dataLength={categoryItems.length - 1}>
             <SliderContainer.Slider>
               {categoryItems.map((item, idx) => (
                 <SliderContainer.Item key={idx}>
-                  <PlanCard
-                    plan={item}
-                    activeId={activeId}
-                    handleActiveId={handleActiveId}
-                  />
+                  <PlanCard plan={item} />
                 </SliderContainer.Item>
               ))}
             </SliderContainer.Slider>

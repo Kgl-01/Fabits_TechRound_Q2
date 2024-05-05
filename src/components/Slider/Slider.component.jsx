@@ -1,8 +1,9 @@
 import * as stylex from "@stylexjs/stylex"
 
 import ArrowIcon from "../../assets/carousel/left_arrow.svg"
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import { useSliderContext } from "../../context/sliderContext/useSliderConext"
 import { rootStyles } from "../../rootStyling.stylex"
+import { useRef } from "react"
 
 const styles = stylex.create({
   container: {
@@ -28,15 +29,11 @@ const styles = stylex.create({
     justifyContent: "center",
   },
   leftHandle: {
-    background: "linear-gradient(to right, white,rgba(255,255,255,0.4))",
-    boxShadow: "-1rem 0rem 2rem rgba(255,255,255,1)",
     left: 0,
+    borderRadius: "0 0 2rem 2rem",
   },
   rightHandle: {
     rotate: "180deg",
-    background: "linear-gradient(to left,rgba(255,255,255,0.5), white)",
-    // boxShadow: "1rem 0rem 3rem rgba(0,0,0,0.25)",
-    borderRadius: "2rem 0rem 0rem 0.6rem",
     right: 0,
   },
   handle: {
@@ -47,27 +44,24 @@ const styles = stylex.create({
     position: "absolute",
     border: "none",
     height: "100%",
+    background: "none",
   },
 })
 
-const SliderContext = createContext({
-  sliderIndex: null,
-})
-
 const SliderContainer = ({ children, dataLength, ...props }) => {
-  const [sliderIndex, setSliderIndex] = useState(0)
-
-  const moveLeft = () => {
-    setSliderIndex((c) => c - 2)
-  }
-
-  const moveRight = () => {
-    setSliderIndex((c) => c + 2)
-  }
+  const {
+    sliderIndex,
+    moveLeft,
+    moveRight,
+    handleExpandSlider,
+    handleCollpaseSlider,
+    expandSlider,
+  } = useSliderContext()
+  const isExpanded = useRef(false)
 
   return (
     <div {...props} {...stylex.props(styles.container)}>
-      {sliderIndex != 0 && (
+      {(sliderIndex != 0 || expandSlider == true) && (
         <button
           {...stylex.props(styles.leftHandle, styles.handle)}
           onClick={moveLeft}
@@ -75,9 +69,8 @@ const SliderContainer = ({ children, dataLength, ...props }) => {
           <img src={ArrowIcon} />
         </button>
       )}
-      <SliderContext.Provider value={{ sliderIndex }}>
-        {children}
-      </SliderContext.Provider>
+
+      {children}
 
       {sliderIndex < dataLength * (3 / 4) && (
         <button
@@ -92,9 +85,14 @@ const SliderContainer = ({ children, dataLength, ...props }) => {
 }
 
 const Slider = ({ children, ...props }) => {
-  const { sliderIndex } = useContext(SliderContext)
+  const { sliderIndex, handleExpandSlider } = useSliderContext()
+
   return (
-    <div {...props} {...stylex.props(styles.slider(sliderIndex))}>
+    <div
+      {...props}
+      {...stylex.props(styles.slider(sliderIndex))}
+      onClick={handleExpandSlider}
+    >
       {children}
     </div>
   )

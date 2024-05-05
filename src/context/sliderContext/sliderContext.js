@@ -1,3 +1,12 @@
 import { createContext } from "react"
 
-const SliderContext = createContext()
+export const SliderContext = createContext({
+  sliderIndex: null,
+  expandSlider: false,
+  activeId: null,
+  moveLeft: () => null,
+  moveRight: () => null,
+  handleExpandSlider: () => null,
+  handleActiveItemId: () => null,
+  handleCollpaseSlider: () => null,
+})
