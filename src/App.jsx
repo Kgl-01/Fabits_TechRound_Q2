@@ -39,6 +39,7 @@ import SliderContainer from "./components/Slider/Slider.component"
 import PlanCard from "./components/PlanCard/PlanCard.component"
 import { SliderContextProvider } from "./context/sliderContext/SliderContextProvider"
 import { useSliderContext } from "./context/sliderContext/useSliderConext"
+import UserCard from "./components/UserCard/UserCard.component"
 
 const bell = stylex.keyframes({
   "0%": {
@@ -586,6 +587,7 @@ const App = () => {
               />
             </button>
           </header>
+          <UserCard />
           <ul {...stylex.props(styles.menuItems)}>
             <li
               {...stylex.props(styles.menuItem, styles.cursor)}

@@ -14,7 +14,7 @@ const styles = stylex.create({
   },
   slider: (sliderIndex) => ({
     display: "flex",
-    transform: `translateX(calc(${sliderIndex} * -13%))`,
+    transform: `translateX(calc(${sliderIndex} * -15%))`,
     margin: "0rem .25rem",
     flexGrow: 1,
     transition: "transform 1s ease-in-out",

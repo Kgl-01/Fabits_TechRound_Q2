@@ -16,6 +16,7 @@ const styles = styleX.create({
     padding: "0.5rem 0rem 0rem 0.3rem",
     transition: "boxShadow 1s ease-out !important",
     background: "#fff",
+    position: "relative",
   }),
   title: {
     fontWeight: "600",
@@ -29,6 +30,13 @@ const styles = styleX.create({
     fontSize: "0.85rem",
     textWrap: "balance",
   },
+  moreIcon: {
+    position: "absolute",
+    right: "1rem",
+    fontSize: "1.5rem",
+    fontWeight: "500",
+    color: "#808DB3",
+  },
 })
 
 const PlanCard = ({ plan }) => {
@@ -39,6 +47,9 @@ const PlanCard = ({ plan }) => {
       {...styleX.props(styles.container(plan.id == activeId))}
       onClick={() => handleActiveItemId(plan.id)}
     >
+      {plan.id == activeId && (
+        <span {...styleX.props(styles.moreIcon)}>{">"}</span>
+      )}
       <img src={plan.src} {...styleX.props(styles.img)} />
       <div {...styleX.props(styles.title)}>{plan?.label}</div>
       <div {...styleX.props(styles.description)}>{plan.description}</div>
