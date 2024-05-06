@@ -1,6 +1,8 @@
 import * as styleX from "@stylexjs/stylex"
 import ProfileImage from "../../assets/memoji.png"
 
+const sm = "@media (max-width: 476px)"
+
 const styles = styleX.create({
   card: {
     width: "100%",
@@ -8,6 +10,9 @@ const styles = styleX.create({
     background: "#E7EDFC",
     borderRadius: "1rem",
     marginTop: "2.5rem",
+    display: {
+      [sm]: "none",
+    },
   },
   username: {
     color: "#000",

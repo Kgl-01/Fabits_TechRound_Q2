@@ -5,12 +5,22 @@ import { useSliderContext } from "../../context/sliderContext/useSliderConext"
 import { rootStyles } from "../../rootStyling.stylex"
 import { useRef } from "react"
 
+const expand = stylex.keyframes({
+  from: {
+    transform: "translateX(0)",
+  },
+  to: {
+    transform: "translateX(0)",
+  },
+})
+
 const styles = stylex.create({
   container: {
     display: "flex",
     overflow: "hidden",
     position: "relative",
     width: "100%",
+    flexGrow: "1",
   },
   slider: (sliderIndex) => ({
     display: "flex",
@@ -72,7 +82,7 @@ const SliderContainer = ({ children, dataLength, ...props }) => {
 
       {children}
 
-      {sliderIndex < dataLength * (3 / 4) && (
+      {sliderIndex < dataLength * (1 / 2) && (
         <button
           {...stylex.props(styles.rightHandle, styles.handle)}
           onClick={moveRight}

@@ -2,6 +2,8 @@ import * as stylex from "@stylexjs/stylex"
 import { GoalContext } from "../context/goalContext.provider"
 import { useGoal } from "../hooks/useGoal"
 
+const sm = "@media (max-width: 476px)"
+
 const styles = stylex.create({
   hr: {
     width: "100%",
@@ -31,7 +33,7 @@ const styles = stylex.create({
   goalCardHeader: {
     display: "flex",
     width: "100%",
-    gap: "1.4rem",
+    gap: { default: "1.4rem", [sm]: "1.2rem" },
   },
   goalCardTitle: {
     fontWeight: "600",

@@ -1,45 +1,49 @@
-import { useEffect, useRef, useState } from "react"
-import reactLogo from "./assets/react.svg"
-import viteLogo from "/vite.svg"
+import { useRef, useState } from "react"
 
 import * as stylex from "@stylexjs/stylex"
 import FabitsLogo from "./assets/fabits_logo.svg"
-import ResizeIcon from "./assets/resize_icon.svg"
-import NotificationBellIcon from "./assets/notification_bell_icon.svg"
 import NoteStackAdd from "./assets/note_stack_add.svg"
+import NotificationBellIcon from "./assets/notification_bell_icon.svg"
+import ResizeIcon from "./assets/resize_icon.svg"
 
-import HomeIcon from "./assets/navbar/home_icon.svg"
-import TrackChangesIcon from "./assets/navbar/track_changes_icon.svg"
-import BubblesIcon from "./assets/navbar/bubble_chart.svg"
-import InvestmentIcon from "./assets/navbar/real_estate_agent.svg"
 import AddBusinessIcon from "./assets/navbar/add_business.svg"
 import AdminPanelIcon from "./assets/navbar/admin_panel_settings.svg"
+import BubblesIcon from "./assets/navbar/bubble_chart.svg"
+import HomeIcon from "./assets/navbar/home_icon.svg"
+import InvestmentIcon from "./assets/navbar/real_estate_agent.svg"
+import TrackChangesIcon from "./assets/navbar/track_changes_icon.svg"
 import TuneIcon from "./assets/navbar/tune_icon.svg"
 
-import RetirementIcon from "./assets/carousel/retirement_icon.svg"
 import EmergencyIcon from "./assets/carousel/emergency_icon.svg"
-import WeddingIcon from "./assets/carousel/wedding_icon.svg"
+import RetirementIcon from "./assets/carousel/retirement_icon.svg"
 import VacationIcon from "./assets/carousel/vacation_icon.svg"
+import WeddingIcon from "./assets/carousel/wedding_icon.svg"
 
 import GoalCard from "./components/GoalCard.component"
 
+import AheadProgressBar from "./assets/progress-bar/ahead-progress-bar.svg"
+import BehindProgressBar from "./assets/progress-bar/behind-progress-bar.svg"
 import ExcellentProrgessBar from "./assets/progress-bar/excellent-progress-bar.svg"
 import OnTrackProgressBar from "./assets/progress-bar/ontrack-progress-bar.svg"
-import BehindProgressBar from "./assets/progress-bar/behind-progress-bar.svg"
 import PoorProgressBar from "./assets/progress-bar/poor-progress-bar.svg"
-import AheadProgressBar from "./assets/progress-bar/ahead-progress-bar.svg"
 
+import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 import HeartCheck from "./assets/heart-icon/heart_check.svg"
 import HeartCheckExcellent from "./assets/heart-icon/heart_check_excellent.svg"
 import HeartMinus from "./assets/heart-icon/heart_minus.svg"
-import HeartBroken from "./assets/heart-icon/heart_broken.svg"
 
 import WarnIcon from "./assets/warn_icon.svg"
-import SliderContainer from "./components/Slider/Slider.component"
 import PlanCard from "./components/PlanCard/PlanCard.component"
-import { SliderContextProvider } from "./context/sliderContext/SliderContextProvider"
-import { useSliderContext } from "./context/sliderContext/useSliderConext"
+import SliderContainer from "./components/Slider/Slider.component"
 import UserCard from "./components/UserCard/UserCard.component"
+import { useSliderContext } from "./context/sliderContext/useSliderConext"
+import FilterIcon from "./assets/filter_alt.svg"
+import ArrowDropdown from "./assets/arrow_drop_down.svg"
+import Search from "./assets/search.svg"
+import MobileFilter from "./assets/mobileFilter.svg"
+import MenuIcon from "./assets/hamburgerIcon.svg"
+import AccountCircleIcon from "./assets/account_circle.svg"
+import InfoIcon from "./assets/info.svg"
 
 const bell = stylex.keyframes({
   "0%": {
@@ -72,31 +76,72 @@ const offset = stylex.keyframes({
   },
 })
 
+const sm = "@media (max-width: 476px)"
+
 const styles = stylex.create({
   containerSection: {
     width: "100% !important",
     background: "#F4F7FE",
     display: "flex",
-    // gridTemplateColumns: "1fr 4fr",
-    // gridTemplateAreas: "aside main main main",
-    gap: "2rem",
+    flexDirection: {
+      default: "row",
+      [sm]: "column",
+    },
+    gap: { default: "2rem", [sm]: "0rem" },
     minHeight: "100% !important",
+    position: {
+      [sm]: "relative",
+    },
   },
   aside: {
     borderRight: "2px solid #D3DBEC",
-    background: "#F4F7FE",
+    background: { default: "#F4F7FE", [sm]: "#fff" },
     display: "flex",
     padding: "1rem",
     minHeight: "100%",
     position: "relative",
   },
+  mobileDiv: {
+    width: "100%",
+    display: { default: "none", [sm]: "flex" },
+    fontSize: "1.4rem",
+    padding: "1rem",
+    alignItems: "center",
+    fontWeight: "600",
+    border: "1px solid rgba(211, 219, 236, 1)",
+  },
+
+  tapDiv: {
+    display: { default: "none", [sm]: "flex" },
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#575757",
+    fontSize: "0.9rem",
+    padding: "1rem",
+    position: "relative",
+    zIndex: "10",
+
+    "::after": {
+      content: "",
+      width: "100vw",
+      height: "100%",
+      position: "absolute",
+      background: "rgba(244, 247, 254, 1)",
+      zIndex: "-1",
+      borderTop: "1px solid rgba(211, 219, 236, 1)",
+      borderBottom: "1px solid rgba(211, 219, 236, 1)",
+    },
+  },
 
   main: {
-    width: "80%",
+    width: {
+      default: "80%",
+      [sm]: "100%",
+    },
     minHeight: "100%",
     display: "flex",
     flexDirection: "column",
-    padding: "3rem 0rem",
+    padding: { default: "3rem 0rem", [sm]: "0rem" },
     paddingRight: "0rem",
     gap: "2rem",
   },
@@ -113,10 +158,36 @@ const styles = stylex.create({
     cursor: "pointer",
   },
 
+  companyLogoContainer: {
+    display: "flex",
+    gap: "1rem",
+  },
+  menuIcon: {
+    display: {
+      default: "none",
+      [sm]: "block",
+    },
+    width: {
+      [sm]: "2rem",
+    },
+  },
+
   navHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    position: {
+      [sm]: "sticky",
+    },
+    top: {
+      [sm]: 0,
+    },
+    alignSelf: {
+      [sm]: "flex-start",
+    },
+    width: {
+      [sm]: "100%",
+    },
   },
   buttonProps: {
     outline: "none",
@@ -136,14 +207,35 @@ const styles = stylex.create({
       animationDirection: "linear",
     },
   },
+  accountCircle: {
+    display: {
+      default: "none",
+      [sm]: "block",
+    },
+    width: {
+      [sm]: "2rem",
+    },
+  },
   resizeButton: (width) => ({
     position: "fixed",
     left: `calc(${width}px-20px)`,
     top: "4rem",
+    display: {
+      [sm]: "none",
+    },
   }),
   menuItems: {
+    display: {
+      default: "flex",
+      [sm]: "none",
+    },
+    flexDirection: {
+      default: "column",
+    },
     listStyle: "none",
     padding: "0rem",
+    fontSize: "0.8rem",
+    color: "#6E6E6E",
   },
   menuItem: (isActive) => ({
     display: "flex",
@@ -152,26 +244,34 @@ const styles = stylex.create({
     cursor: "pointer",
     border: isActive && "2px solid #41558D",
     borderRadius: isActive && "0.5rem",
-    color: isActive && "#41558D",
+    color: isActive ? "#41558D" : "#000",
     padding: "0.5rem",
     fontSize: "1rem",
   }),
   activeNavItem: {
     display: "none",
+    width: "100%",
   },
   flex: {
     display: "flex",
     gap: "1rem",
+    flexGrow: "1",
   },
 
   bodyHeader: {
     width: "100%",
-    height: "18rem",
+    height: {
+      default: "18rem",
+      [sm]: "100%",
+    },
     border: "2px solid #D3DBEC",
-    borderRadius: "2rem",
+    borderRadius: { default: "2rem", [sm]: 0 },
     background: "#ffffff",
     filter: "drop-shadow(0rem 0.7rem 0.5rem #D3DBEC)",
     display: "flex",
+    flexDirection: {
+      [sm]: "column",
+    },
     gap: "1rem",
     padding: "1rem 0rem 0rem 1rem",
   },
@@ -183,17 +283,41 @@ const styles = stylex.create({
   }),
 
   headerQuery: (isExpanded) => ({
-    display: isExpanded ? "none" : "flex",
+    display: {
+      default: "flex",
+      [sm]: "flex",
+    },
+    width: { default: isExpanded ? "0%" : "40%", [sm]: "100%" },
+
+    visibility: {
+      default: isExpanded ? "hidden" : "visible",
+      [sm]: "visible",
+    },
+    transform: {
+      default: isExpanded ? "scale(0)" : "scale(1)",
+      [sm]: "none",
+    },
+    transformOrigin: {
+      default: isExpanded && "left",
+      [sm]: "none",
+    },
+    opacity: {
+      default: isExpanded ? "0" : 1,
+      [sm]: 1,
+    },
+    transition: "transform 2s, opacity 2s, vsisibility 2s",
     flexDirection: "column",
     position: "relative",
     gap: "0.5rem",
-    height: "12rem",
-    width: "40%",
+    height: { default: "12rem", [sm]: "100%" },
+    paddingRight: {
+      [sm]: "0.4rem",
+    },
   }),
   headerQueryTitle: {
     margin: "0",
     fontWeight: "700",
-    fontSize: "clamp(0.75rem,2vw,1.5rem)",
+    fontSize: "1.5rem",
     color: "#2D2D2D",
     lineHeight: "1.6rem",
   },
@@ -202,7 +326,7 @@ const styles = stylex.create({
     position: "absolute",
     bottom: "0",
     left: "3rem",
-    display: isExpanded ? "none" : "block",
+    display: { default: isExpanded ? "none" : "block", [sm]: "none" },
   }),
 
   carouselContainer: {
@@ -219,6 +343,20 @@ const styles = stylex.create({
     borderRadius: "2rem",
     background: "#ffffff",
     padding: "2rem",
+  },
+  goalsContainerHeader: {
+    display: "flex",
+    flexDirection: { [sm]: "column" },
+    justifyContent: "space-between",
+    gap: {
+      [sm]: "1rem",
+    },
+  },
+  filterIconSm: {
+    display: {
+      default: "none",
+      [sm]: "block",
+    },
   },
   sectionTitle: {
     fontWeight: "600",
@@ -315,6 +453,58 @@ const styles = stylex.create({
   },
   ahead: {
     color: "rgba(59, 77, 128, 1)",
+  },
+  toolbarContainer: {
+    display: {
+      default: "flex",
+    },
+
+    justifyContent: "space-between",
+    gap: "2.5rem",
+    fontSize: "0.85rem",
+  },
+  filterAndSelect: {
+    display: {
+      default: "flex",
+      [sm]: "none",
+    },
+    justifyContent: "space-between",
+    gap: "2.5rem",
+  },
+  searchAndFilter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: {
+      [sm]: "100%",
+    },
+  },
+  customInput: {
+    display: {
+      default: "flex",
+    },
+    border: "2px solid #D3DBEC",
+    padding: "0.2rem 0.1rem 0.2rem 0.5rem",
+    borderRadius: "0.5rem",
+    justifyContent: "space-between",
+    gap: "0.5rem",
+    ":focus-within": {
+      border: "2px solid #A8B1CB",
+    },
+  },
+  inputField: {
+    border: "none",
+    outline: "none",
+    fontSize: "1.1rem",
+    "::placeholder": {
+      color: "#A8B1CB",
+    },
+  },
+  mobileFilter: {
+    display: {
+      default: "none",
+      [sm]: "block",
+    },
   },
 })
 
@@ -579,13 +769,24 @@ const App = () => {
       <aside {...stylex.props(styles.aside)} ref={navbarRef}>
         <nav {...stylex.props(styles.mainNavbar)}>
           <header {...stylex.props(styles.navHeader)}>
-            <img src={FabitsLogo} {...stylex.props(styles.cursor)} />
-            <button {...stylex.props(styles.buttonProps)}>
+            <div {...stylex.props(styles.companyLogoContainer)}>
+              <img src={MenuIcon} {...stylex.props(styles.menuIcon)} />
+              <img src={FabitsLogo} {...stylex.props(styles.cursor)} />
+            </div>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}
+            >
+              <button {...stylex.props(styles.buttonProps)}>
+                <img
+                  src={NotificationBellIcon}
+                  {...stylex.props(styles.cursor, styles.notificationBell)}
+                />
+              </button>
               <img
-                src={NotificationBellIcon}
-                {...stylex.props(styles.cursor, styles.notificationBell)}
+                src={AccountCircleIcon}
+                {...stylex.props(styles.accountCircle)}
               />
-            </button>
+            </div>
           </header>
           <UserCard />
           <ul {...stylex.props(styles.menuItems)}>
@@ -638,7 +839,10 @@ const App = () => {
                   )}
                 >
                   <img src={item.iconSource} />
-                  <label htmlFor={item.id} {...stylex.props(styles.cursor)}>
+                  <label
+                    htmlFor={item.id}
+                    {...stylex.props(styles.flex, styles.cursor)}
+                  >
                     {item.label}{" "}
                     <input
                       type="radio"
@@ -667,6 +871,8 @@ const App = () => {
         </button>
       </aside>
 
+      <div {...stylex.props(styles.mobileDiv)}>{"<"} Plan a goal</div>
+
       <div {...stylex.props(styles.main)}>
         <header {...stylex.props(styles.bodyHeader)}>
           <div {...stylex.props(styles.headerQuery(expandSlider))}>
@@ -694,12 +900,62 @@ const App = () => {
         </header>
 
         <section {...stylex.props(styles.goalsContainer)}>
-          <header>
+          <header {...stylex.props(styles.goalsContainerHeader)}>
             <span {...stylex.props(styles.sectionTitle)}>
               Track current goals
             </span>
+            <div {...stylex.props(styles.toolbarContainer)}>
+              <div {...stylex.props(styles.filterAndSelect)}>
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                  }}
+                >
+                  <span style={{ color: "#41558D" }}>Filters </span>{" "}
+                  <img src={FilterIcon} />
+                </span>
+
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                    color: "#727272",
+                  }}
+                >
+                  <>Select :</>{" "}
+                  <span style={{ color: "#41558D" }}>
+                    Progress (High to Low) <img src={ArrowDropdown} />
+                  </span>
+                </span>
+              </div>
+
+              <div {...stylex.props(styles.searchAndFilter)}>
+                <div {...stylex.props(styles.customInput)}>
+                  <img src={Search} />
+                  <input
+                    placeholder="Search"
+                    {...stylex.props(styles.inputField)}
+                  />
+                </div>
+                <img
+                  src={MobileFilter}
+                  {...stylex.props(styles.mobileFilter)}
+                />
+              </div>
+            </div>
           </header>
           <hr style={{ width: "100%" }} />
+          <div {...stylex.props(styles.tapDiv)}>
+            <span
+              style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}
+            >
+              <img src={InfoIcon} />
+              <>Tap on a card to view more information</>
+            </span>
+          </div>
           <div {...stylex.props(styles.goalCardList)}>
             {goalItems.map((goal, index) => (
               <GoalCard
