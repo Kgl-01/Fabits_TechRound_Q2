@@ -369,7 +369,7 @@ const styles = stylex.create({
       [sm]: stylex.firstThatWorks("-webkit-sticky", "sticky"),
     },
     top: {
-      [sm]: "4.5rem",
+      [sm]: "4.35rem",
     },
     zIndex: {
       [sm]: "1000",
