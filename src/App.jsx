@@ -78,6 +78,8 @@ const offset = stylex.keyframes({
 
 const sm = "@media (max-width: 476px)"
 
+const md = "@media (max-width: 768px)"
+
 const styles = stylex.create({
   containerSection: {
     width: "100% !important",
@@ -287,7 +289,7 @@ const styles = stylex.create({
       default: "flex",
       [sm]: "flex",
     },
-    width: { default: isExpanded ? "0%" : "40%", [sm]: "100%" },
+    width: { default: isExpanded ? "0%" : "40%", [sm]: "100%", [md]: "50%" },
 
     visibility: {
       default: isExpanded ? "hidden" : "visible",
@@ -317,7 +319,7 @@ const styles = stylex.create({
   headerQueryTitle: {
     margin: "0",
     fontWeight: "700",
-    fontSize: "1.5rem",
+    fontSize: { default: "1.5rem", [md]: "1.2rem" },
     color: "#2D2D2D",
     lineHeight: "1.6rem",
   },
@@ -325,7 +327,7 @@ const styles = stylex.create({
   noteStackIcon: (isExpanded) => ({
     position: "absolute",
     bottom: "0",
-    left: "3rem",
+    left: { default: "3rem", [md]: "1.7rem" },
     display: { default: isExpanded ? "none" : "block", [sm]: "none" },
   }),
 
@@ -346,7 +348,7 @@ const styles = stylex.create({
   },
   goalsContainerHeader: {
     display: "flex",
-    flexDirection: { [sm]: "column" },
+    flexDirection: { [sm]: "column", [md]: "column" },
     justifyContent: "space-between",
     gap: {
       [sm]: "1rem",
@@ -362,41 +364,7 @@ const styles = stylex.create({
     fontWeight: "600",
     fontSize: "1.3rem",
   },
-  goalCard: (isValidItem) => ({
-    flex: "1 1 30%",
-    maxWidth: isValidItem && "30%",
-    aspectRatio: "0.75/1",
-    border: "2px solid #D3DBEC",
-    borderRadius: "2.5rem",
-    padding: "1.2rem",
-    transform: "translateY(0rem)",
-    transition: "all 0.1s",
-    background: "#fff",
-    ":hover": {
-      cursor: "pointer",
-      transform: "translateY(-0.25rem)",
-      transition: "all 0.1s ease-in",
-      filter: "drop-shadow(0rem 1rem 1rem rgba(36, 47, 78, 0.12))",
-    },
-  }),
-  goalCardHeader: {
-    display: "flex",
-    width: "100%",
-    gap: "1.4rem",
-  },
-  goalCardTitle: {
-    fontWeight: "600",
-    fontSize: "1.2rem",
-  },
-  goalInfo: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  goalInfoRow: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
+
   goalCardList: {
     display: "flex",
     flexWrap: "wrap",
@@ -469,7 +437,19 @@ const styles = stylex.create({
       [sm]: "none",
     },
     justifyContent: "space-between",
-    gap: "2.5rem",
+    gap: { default: "2.5rem", [md]: "2rem" },
+  },
+  progressContainer: {
+    display: "flex",
+    alignItems: {
+      default: "center",
+      [md]: "flex-start",
+    },
+    gap: "0.3rem",
+    color: "#727272",
+    flexDirection: {
+      [md]: "column",
+    },
   },
   searchAndFilter: {
     display: "flex",
@@ -917,14 +897,7 @@ const App = () => {
                   <img src={FilterIcon} />
                 </span>
 
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
-                    color: "#727272",
-                  }}
-                >
+                <span {...stylex.props(styles.progressContainer)}>
                   <>Select :</>{" "}
                   <span style={{ color: "#41558D" }}>
                     Progress (High to Low) <img src={ArrowDropdown} />
