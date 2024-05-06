@@ -4,6 +4,8 @@ import stylexPlugin from "@stylexjs/rollup-plugin"
 import path from "path"
 import svgr from "vite-plugin-svgr"
 
+const isProd = process.env.NODE_ENV == "production"
+
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
@@ -21,4 +23,7 @@ export default defineConfig({
     },
   },
   plugins: [svgr(), react({ babel: { configFile: true } })],
+  esbuild: {
+    drop: isProd ? ["console", "debugger"] : [],
+  },
 })
