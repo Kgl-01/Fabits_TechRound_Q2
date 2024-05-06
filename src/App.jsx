@@ -92,7 +92,7 @@ const styles = stylex.create({
     gap: { default: "2rem", [sm]: "0rem" },
     minHeight: "100% !important",
     position: {
-      [sm]: "relative",
+      default: "relative",
     },
   },
   aside: {
@@ -101,7 +101,16 @@ const styles = stylex.create({
     display: "flex",
     padding: "1rem",
     minHeight: "100%",
-    position: "relative",
+    position: {
+      default: "relative",
+      [sm]: stylex.firstThatWorks("sticky", "-webkit-sticky"),
+    },
+    top: {
+      [sm]: 0,
+    },
+    zIndex: {
+      [sm]: "10000",
+    },
   },
   mobileDiv: {
     width: "100%",
@@ -146,6 +155,9 @@ const styles = stylex.create({
     padding: { default: "3rem 0rem", [sm]: "0rem" },
     paddingRight: "0rem",
     gap: "2rem",
+    position: {
+      [sm]: "relative",
+    },
   },
 
   mainNavbar: {
@@ -352,6 +364,18 @@ const styles = stylex.create({
     justifyContent: "space-between",
     gap: {
       [sm]: "1rem",
+    },
+    position: {
+      [sm]: stylex.firstThatWorks("-webkit-sticky", "sticky"),
+    },
+    top: {
+      [sm]: "4.5rem",
+    },
+    zIndex: {
+      [sm]: "1000",
+    },
+    background: {
+      [sm]: "#fff",
     },
   },
   filterIconSm: {
