@@ -78,7 +78,7 @@ const offset = stylex.keyframes({
 
 const sm = "@media (max-width: 476px)"
 
-const md = "@media (max-width: 768px)"
+const md = "@media (min-width: 477px)and (max-width: 768px)"
 
 const styles = stylex.create({
   containerSection: {
