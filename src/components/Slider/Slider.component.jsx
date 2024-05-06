@@ -3,7 +3,7 @@ import * as stylex from "@stylexjs/stylex"
 import ArrowIcon from "../../assets/carousel/left_arrow.svg"
 import { useSliderContext } from "../../context/sliderContext/useSliderConext"
 import { rootStyles } from "../../rootStyling.stylex"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 const expand = stylex.keyframes({
   from: {
@@ -69,6 +69,25 @@ const SliderContainer = ({ children, dataLength, ...props }) => {
   } = useSliderContext()
   const isExpanded = useRef(false)
 
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.key == "ArrowRight" && sliderIndex < dataLength * (1 / 2)) {
+        moveRight()
+      } else if (
+        e.key == "ArrowLeft" &&
+        (sliderIndex != 0 || expandSlider == true)
+      ) {
+        moveLeft()
+      } else {
+        return
+      }
+    }
+
+    document.addEventListener("keyup", handleClick)
+
+    return () => document.removeEventListener("keyup", handleClick)
+  }, [])
+
   return (
     <div {...props} {...stylex.props(styles.container)}>
       {(sliderIndex != 0 || expandSlider == true) && (
@@ -109,8 +128,14 @@ const Slider = ({ children, ...props }) => {
 }
 
 const Item = ({ children, ...props }) => {
+  const linkedinUrl = "https://www.linkedin.com/in/kgl01"
+
   return (
-    <div {...props} {...stylex.props(styles.item)}>
+    <div
+      {...props}
+      {...stylex.props(styles.item)}
+      onClick={() => window.open(linkedinUrl, "_blank")}
+    >
       {children}
     </div>
   )

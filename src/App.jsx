@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import * as stylex from "@stylexjs/stylex"
 import FabitsLogo from "./assets/fabits_logo.svg"

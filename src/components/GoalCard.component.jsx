@@ -107,12 +107,14 @@ const styles = stylex.create({
 })
 
 const GoalCard = ({ children, goal, index, listLength }) => {
+  const linkedinUrl = "https://www.linkedin.com/in/kgl01"
   return (
     <GoalContext.Provider value={{ goal }}>
       <div
         {...stylex.props(
           styles.goalCard(index == listLength - 1 || index == listLength - 2)
         )}
+        onClick={() => window.open(linkedinUrl, "_blank")}
       >
         {children}
       </div>
