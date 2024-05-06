@@ -128,14 +128,8 @@ const Slider = ({ children, ...props }) => {
 }
 
 const Item = ({ children, ...props }) => {
-  const linkedinUrl = "https://www.linkedin.com/in/kgl01"
-
   return (
-    <div
-      {...props}
-      {...stylex.props(styles.item)}
-      onClick={() => window.open(linkedinUrl, "_blank")}
-    >
+    <div {...props} {...stylex.props(styles.item)}>
       {children}
     </div>
   )

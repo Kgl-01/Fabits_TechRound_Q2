@@ -41,11 +41,15 @@ const styles = styleX.create({
 
 const PlanCard = ({ plan }) => {
   const { activeId, handleActiveItemId } = useSliderContext()
+  const linkedinUrl = "https://www.linkedin.com/in/kgl01"
 
   return (
     <div
       {...styleX.props(styles.container(plan.id == activeId))}
-      onClick={() => handleActiveItemId(plan.id)}
+      onClick={() => {
+        handleActiveItemId(plan.id)
+        window.open(linkedinUrl, "_blank")
+      }}
     >
       {plan.id == activeId && (
         <span {...styleX.props(styles.moreIcon)}>{">"}</span>
